@@ -1,10 +1,9 @@
 import stripePackage from "stripe";
-import { calculateCost } from "./libs/billing-lib";
 import { success, failure } from "./libs/response-lib";
 
 export async function main(event, context) {
-  const { storage, source } = JSON.parse(event.body);
-  const amount = calculateCost(storage);
+  const { source } = JSON.parse(event.body);
+  const amount = 1500;
   const description = "Riser Sizer Monthly Subscription";
 
   // Load our secret key from the  environment variables
@@ -13,7 +12,7 @@ export async function main(event, context) {
   try {
     await stripe.charges.create({
       source,
-      1500,
+      amount,
       description,
       currency: "usd"
     });
