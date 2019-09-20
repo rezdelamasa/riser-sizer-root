@@ -1,0 +1,4 @@
+[build]
+base = "riser-sizer/"
+publish = "myapp/build/"
+command = "yarn build"
