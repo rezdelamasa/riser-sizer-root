@@ -12,7 +12,6 @@ export async function main(event, context) {
     // - 'noteId': path parameter
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      projectId: event.pathParameters.id
     },
     // 'UpdateExpression' defines the attributes to be updated
     // 'ExpressionAttributeValues' defines the value in the update expression

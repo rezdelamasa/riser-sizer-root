@@ -15,12 +15,10 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-riser-sizer 
+  tableName: ${self:custom.stage}-riser-sizer-user-properties
   # Load our secret environment variables based on the current stage.
   # Fallback to default if it is not in prod.
   environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
-
-
 
 provider:
   name: aws
@@ -28,10 +26,10 @@ provider:
   stage: dev
   region: us-east-2
 
-   # These environment variables are made available to our functions
+  #  These environment variables are made available to our functions
   # under process.env.
   environment:
-    tableName: ${self:custom.tableName}
+    tableName: riser-sizer-user-properties
     stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
@@ -47,7 +45,7 @@ provider:
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
-        - "Fn::GetAtt": [ ProjectsTable, Arn ]
+        - "Fn::GetAtt": [ UsersTable, Arn ]
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
@@ -60,7 +58,7 @@ functions:
     handler: create.main
     events:
       - http:
-          path: riser-sizer
+          path: riser-sizer-user-properties
           method: post
           cors: true
           authorizer: aws_iam
@@ -71,7 +69,7 @@ functions:
     handler: get.main
     events:
       - http:
-          path: riser-sizer/{id}
+          path: riser-sizer-user-properties
           method: get
           cors: true
           authorizer: aws_iam
@@ -93,19 +91,8 @@ functions:
     handler: update.main
     events:
       - http:
-          path: riser-sizer/{id}
+          path: riser-sizer-user-properties
           method: put
-          cors: true
-          authorizer: aws_iam
-  delete:
-    # Defines an HTTP API endpoint that calls the main function in delete.js
-    # - path: url path is /projects/{id}
-    # - method: DELETE request
-    handler: delete.main
-    events:
-      - http:
-          path: riser-sizer/{id}
-          method: delete
           cors: true
           authorizer: aws_iam
   billing:

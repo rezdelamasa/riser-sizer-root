@@ -1,8 +1,5 @@
 {
-  "body": "{\"content\":\"new world\"}",
-  "pathParameters": {
-    "id": "96fb5360-c90a-11e9-bf7a-7b33400dff09"
-  },
+  "body": "{\"content\": {\"projects\": [{\"id\": \"1234567890\",\"name\": \"Palisades\"}]}}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
