@@ -1,9 +1,10 @@
 import stripePackage from "stripe";
-// import * as dynamoDbLib from "./libs/dynamodb-lib";
+import * as dynamoDbLib from "./libs/dynamodb-lib";
 import { success, failure } from "./libs/response-lib";
 
 export async function main(event, context) {
   const { source } = JSON.parse(event.body);
+  const data = JSON.parse(event.body);
   const amount = 1500;
   const description = "Riser Sizer Monthly Subscription - Basic";
 
@@ -22,7 +23,7 @@ export async function main(event, context) {
     // 'ExpressionAttributeValues' defines the value in the update expression
     UpdateExpression: "SET content = :content",
     ExpressionAttributeValues: {
-      ":content": data.content || ndull
+      ":content": data.content || null
     },
     // 'ReturnValues' specifies if and how to return the item's attributes,
     // where ALL_NEW returns all attributes of the item after the update; you
@@ -37,7 +38,7 @@ export async function main(event, context) {
       description,
       currency: "usd"
     });
-    // await dynamoDbLib.call("update", params);
+    await dynamoDbLib.call("update", params);
     return success({ status: true });
   } catch (e) {
     return failure({ message: e.message });

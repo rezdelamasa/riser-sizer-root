@@ -10,15 +10,15 @@ plugins:
   - serverless-bundle # Package our functions with Webpack
   - serverless-offline
 
-custom:
-  # Our stage is based on what is passed in when running serverless
-  # commands. Or fallsback to what we have set in the provider section.
-  stage: ${opt:stage, self:provider.stage}
-  # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-riser-sizer-user-properties
-  # Load our secret environment variables based on the current stage.
-  # Fallback to default if it is not in prod.
-  environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
+# custom:
+#   # Our stage is based on what is passed in when running serverless
+#   # commands. Or fallsback to what we have set in the provider section.
+#   stage: ${opt:stage, self:provider.stage}
+#   # Set the table name here so we can use it while testing locally
+#   tableName: riser-sizer-user-properties
+#   # Load our secret environment variables based on the current stage.
+#   # Fallback to default if it is not in prod.
+#   environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
 
 provider:
   name: aws
@@ -26,11 +26,11 @@ provider:
   stage: dev
   region: us-east-2
 
-  #  These environment variables are made available to our functions
-  # under process.env.
-  environment:
-    tableName: riser-sizer-user-properties
-    stripeSecretKey: ${self:custom.environment.stripeSecretKey}
+  # #  These environment variables are made available to our functions
+  # # under process.env.
+  # environment:
+  #   tableName: riser-sizer-user-properties
+  #   stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
     - Effect: Allow
@@ -44,8 +44,7 @@ provider:
         - dynamodb:DeleteItem
       # Restrict our IAM role permissions to
       # the specific table for the stage
-      Resource:
-        - "Fn::GetAtt": [ UsersTable, Arn ]
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
@@ -73,17 +72,17 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-  list:
-    # Defines an HTTP API endpoint that calls the main function in list.js
-    # - path: url path is /projects
-    # - method: GET request
-    handler: list.main
-    events:
-      - http:
-          path: riser-sizer
-          method: get
-          cors: true
-          authorizer: aws_iam
+  # list:
+  #   # Defines an HTTP API endpoint that calls the main function in list.js
+  #   # - path: url path is /projects
+  #   # - method: GET request
+  #   handler: list.main
+  #   events:
+  #     - http:
+  #         path: riser-sizer
+  #         method: get
+  #         cors: true
+  #         authorizer: aws_iam
   update:
     # Defines an HTTP API endpoint that calls the main function in update.js
     # - path: url path is /projects/{id}
@@ -108,8 +107,8 @@ functions:
 resources:
   # API Gateway Errors
   - ${file(resources/api-gateway-errors.yml)}
-  # DynamoDB
-  - ${file(resources/dynamodb-table.yml)}
-  # Cognito
-  - ${file(resources/cognito-user-pool.yml)}
-  - ${file(resources/cognito-identity-pool.yml)}
+#   # DynamoDB
+#   - ${file(resources/dynamodb-table.yml)}
+#   # Cognito
+#   - ${file(resources/cognito-user-pool.yml)}
+#   - ${file(resources/cognito-identity-pool.yml)}

@@ -5,7 +5,7 @@ import { success, failure } from "./libs/response-lib";
 export async function main(event, context) {
   const data = JSON.parse(event.body);
   const params = {
-    TableName: process.env.tableName,
+    TableName: "riser-sizer-user-properties",
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
       // projectId: uuid.v1(),
