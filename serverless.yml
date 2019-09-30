@@ -59,7 +59,7 @@ functions:
     handler: create.main
     events:
       - http:
-          path: riser-sizer-user-properties
+          path: riser-sizer
           method: post
           cors: true
           authorizer: aws_iam
@@ -70,7 +70,7 @@ functions:
     handler: get.main
     events:
       - http:
-          path: riser-sizer-user-properties
+          path: riser-sizer
           method: get
           cors: true
           authorizer: aws_iam
@@ -82,7 +82,7 @@ functions:
     handler: update.main
     events:
       - http:
-          path: riser-sizer-user-properties
+          path: riser-sizer
           method: put
           cors: true
           authorizer: aws_iam
