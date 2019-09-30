@@ -1,5 +1,5 @@
 Resources:
-  UsersTable:
+  UserPropsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: ${self:custom.tableName}
