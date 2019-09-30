@@ -32,6 +32,11 @@ provider:
   #   tableName: riser-sizer-user-properties
   #   stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
+    # These environment variables are made available to our functions
+  # under process.env.
+  environment:
+    tableName: ${self:custom.tableName}
+
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -44,7 +49,9 @@ provider:
         - dynamodb:DeleteItem
       # Restrict our IAM role permissions to
       # the specific table for the stage
-      Resource: "arn:aws:dynamodb:us-east-2:*:*"
+      Resource:
+        - "Fn::GetAtt": [ UsersTable, Arn ]
+
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
