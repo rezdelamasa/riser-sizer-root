@@ -15,7 +15,7 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-user-props
+  tableName: ${self:custom.stage}-user-properties
   # Load our secret environment variables based on the current stage.
   # Fallback to default if it is not in prod.
   environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
@@ -45,7 +45,7 @@ provider:
       # Restrict our IAM role permissions to
       # the specific table for the stage
       Resource:
-        - "Fn::GetAtt": [ UserPropsTable, Arn ]
+        - "Fn::GetAtt": [ UserPropertiesTable, Arn ]
 
 
 functions:
