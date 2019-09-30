@@ -44,7 +44,7 @@ provider:
         - dynamodb:DeleteItem
       # Restrict our IAM role permissions to
       # the specific table for the stage
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+      Resource: "arn:aws:dynamodb:us-east-2:*:*"
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
@@ -105,10 +105,8 @@ functions:
 
 # Create our resources with separate CloudFormation templates
 resources:
-  # API Gateway Errors
+  API Gateway Errors
   - ${file(resources/api-gateway-errors.yml)}
-#   # DynamoDB
-#   - ${file(resources/dynamodb-table.yml)}
-#   # Cognito
-#   - ${file(resources/cognito-user-pool.yml)}
-#   - ${file(resources/cognito-identity-pool.yml)}
+  - ${file(resources/dynamodb-table.yml)}
+  - ${file(resources/cognito-user-pool.yml)}
+  - ${file(resources/cognito-identity-pool.yml)}
