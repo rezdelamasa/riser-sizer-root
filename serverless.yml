@@ -26,11 +26,11 @@ provider:
   stage: dev
   region: us-east-2
     
-    # These environment variables are made available to our functions
+  #   These environment variables are made available to our functions
   # under process.env.
-  # environment:
-  #   tableName: ${self:custom.tableName}
-  #   stripeSecretKey: ${self:custom.environment.stripeSecretKey}
+  environment:
+    tableName: ${self:custom.tableName}
+    stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
     - Effect: Allow
