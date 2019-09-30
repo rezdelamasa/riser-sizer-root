@@ -1,6 +1,6 @@
 # NOTE: update this with your service name
 
-service: riser-sizer-api-v3
+service: riser-sizer-api
 
 # Create an optimized package for our functions
 package:
