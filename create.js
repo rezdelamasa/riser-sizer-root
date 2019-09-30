@@ -12,7 +12,6 @@ export async function main(event, context) {
       content: data.content,
       createdAt: Date.now()
     }
-    console.log(event);
   };
 
   try {
