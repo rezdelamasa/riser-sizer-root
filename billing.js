@@ -50,8 +50,8 @@ export async function main(event, context) {
       customer: customer.id,
       items: [{plan: 'plan_FuOakFPk6mzHzx'}],
     });
-    params["ExpressionAttributeValues"]['":content"'].user.customerId = customer.id;
-    return success({ status: true });
+    params["ExpressionAttributeValues"][":content"].user.customerId = customer.id;
+    return success({ message: params["ExpressionAttributeValues"][":content"].user });
   } catch (e) {
     return failure({ message: e.message });
   }
