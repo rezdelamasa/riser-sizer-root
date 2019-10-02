@@ -1,15 +1,19 @@
-import stripePackage from "stripe";
+// import stripePackage from "stripe";
 import * as dynamoDbLib from "./libs/dynamodb-lib";
 import { success, failure } from "./libs/response-lib";
 
 export async function main(event, context) {
   const { source } = JSON.parse(event.body);
   const { data } = JSON.parse(event.body);
-  const amount = 1500;
-  const description = "Riser Sizer Monthly Subscription - Basic";
+  // const amount = 1500;
+  // const description = "Riser Sizer Monthly Subscription - Basic";
 
   // Load our secret key from the  environment variables
-  const stripe = stripePackage(process.env.stripeSecretKey);
+  // const stripe = stripePackage(process.env.stripeSecretKey);
+
+  // Set your secret key: remember to change this to your live secret key in production
+  // See your keys here: https://dashboard.stripe.com/account/apikeys
+  const stripe = require('stripe')('sk_test_KFZXlDCk4Yazdjn7fjkAJHaA00QlhtfFlX');
 
   const params = {
     TableName: process.env.tableName,
@@ -32,12 +36,21 @@ export async function main(event, context) {
   };
 
   try {
-    await stripe.charges.create({
-      source,
-      amount,
-      description,
-      currency: "usd"
+    // await stripe.charges.create({
+    //   source,
+    //   amount,
+    //   description,
+    //   currency: "usd"
+    // });
+    const customer = await stripe.customers.create({
+      email: data.content.user.email,
+      source
     });
+    await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [{plan: 'plan_FuOakFPk6mzHzx'}],
+    });
+    params.ExpressionAttributeValues[":content"].data.content.user.customerId = customer.id;
     await dynamoDbLib.call("update", params);
     return success({ status: true });
   } catch (e) {
