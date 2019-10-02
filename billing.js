@@ -50,7 +50,7 @@ export async function main(event, context) {
       customer: customer.id,
       items: [{plan: 'plan_FuOakFPk6mzHzx'}],
     });
-    params.ExpressionAttributeValues[":content"].data.content.user.customerId = customer.id;
+    params.ExpressionAttributeValues['":content"'].data.content.user.customerId = customer.id;
     await dynamoDbLib.call("update", params);
     return success({ status: true });
   } catch (e) {
