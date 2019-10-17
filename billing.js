@@ -50,7 +50,12 @@ export async function main(event, context) {
       customer: customer.id,
       items: [{plan: 'plan_FuOakFPk6mzHzx'}],
     });
+    let customerObject = await stripe.customers.retrieve(
+      customer.id
+    );
     params["ExpressionAttributeValues"][":content"].user.customerId = customer.id;
+    params["ExpressionAttributeValues"][":content"].user.expirationDate = customerObject.subscriptions.data[0].current_period_end * 1000;
+    params["ExpressionAttributeValues"][":content"].user.subscription = true;
     await dynamoDbLib.call("update", params);
     return success({ message: params });
   } catch (e) {

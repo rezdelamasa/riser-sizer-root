@@ -10,7 +10,6 @@ export async function main(event, context) {
       userId: event.requestContext.identity.cognitoIdentityId,
       // projectId: uuid.v1(),
       content: data.content,
-      createdAt: Date.now()
     }
   };
 

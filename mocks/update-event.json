@@ -1,5 +1,5 @@
 {
-  "body": "{\"content\": {\"projects\": [{\"id\": \"1234567890\",\"name\": \"Palisades\"}]}}",
+  "body": "{\"content\": {\"customerId\": \"cus_Fv4hPO4gFPbkKh\", \"projects\": [{\"id\": \"1234567890\",\"name\": \"Palisades\"}]}}",
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
