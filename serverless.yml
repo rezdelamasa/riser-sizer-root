@@ -101,7 +101,7 @@ functions:
           path: billing
           method: get
           cors: true
-          authorizer: aws_iamd
+          authorizer: aws_iam
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
