@@ -12,25 +12,10 @@ export async function main(event, context) {
     }
   };
 
-  // var stripe = require('stripe')('sk_test_KFZXlDCk4Yazdjn7fjdkAJHaA00QlhtfFlX');
-
   try {
     const result = await dynamoDbLib.call("get", params);
     if (result.Item) {
       // Return the retrieved item
-
-      // let customerObject = await stripe.customers.retrieve(
-      //   result.Item.content.user.customerId
-      // );
-
-      // if(customerObject.subscriptions.data[0].items.data[0].active) {
-      //   result.Item.content.user.active = true;
-      // }  else {
-      //   result.Item.content.user.active = false;
-      // }
-
-      // result.Item.test = customerObject.subscriptions;
-
       return success(result.Item);
     } else {
       return failure({ status: false, error: "Item not found." });
