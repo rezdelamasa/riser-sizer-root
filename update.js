@@ -5,9 +5,6 @@ export async function main(event, context) {
   console.log(event);
   const data = JSON.parse(event.body);
   console.log(data);
-
-  const stripe = require('stripe')('sk_test_KFZXlDCk4Yazdjn7fjkAJHaA00QlhtfFlX');
-
   const params = {
     TableName: process.env.tableName,
     // 'Key' defines the partition key and sort key of the item to be updated
@@ -29,14 +26,6 @@ export async function main(event, context) {
   };
 
   try {
-    let customerObject = await stripe.customers.retrieve(
-      data.content.customer.id
-    );
-    if(customerObject.subscriptions.data[0].items.data[0].plan.active) {
-      params.UpdateExpression.ExpressionAttributeValues[":content"].data.content.subscription = true;
-    } else {
-      params.UpdateExpression.ExpressionAttributeValues[":content"].data.content.subscription = false;
-    }
     await dynamoDbLib.call("update", params);
     return success({ status: true });
   } catch (e) {
