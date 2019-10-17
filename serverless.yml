@@ -74,7 +74,6 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-
   update:
     # Defines an HTTP API endpoint that calls the main function in update.js
     # - path: url path is /projects/{id}
@@ -94,14 +93,14 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  # getCustomer:
-  #   handler: getCustomer.main
-  #   events:
-  #     - http:
-  #         path: billing
-  #         method: get
-  #         cors: true
-  #         authorizer: aws_iam
+  getCustomer:
+    handler: getCustomer.main
+    events:
+      - http:
+          path: billing
+          method: get
+          cors: true
+          authorizer: aws_iam
 # Create our resources with separate CloudFormation templates
 resources:
   # API Gateway Errors
