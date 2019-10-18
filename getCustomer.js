@@ -6,7 +6,7 @@ export async function main(event, context) {
   // const amount = 1500;
   // const description = "Riser Sizer Monthly Subscription - Basic";
   // Load our secret key from the  environment variables
-  // const stripe = require('stripe')('sk_test_KFZXlDCk4Yazdjn7fjkAJHaA00QlhtfFlX');
+  const stripe = require('stripe')('sk_test_KFZXlDCk4Yazdjn7fjkAJHaA00QlhtfFlX');
 
   // Set your secret key: remember to change this to your live secret key in production
   // See your keys here: https://dashboard.stripe.com/account/apikeys
