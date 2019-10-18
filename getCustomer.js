@@ -9,9 +9,9 @@ export async function main(event, context) {
 
   // Set your secret key: remember to change this to your live secret key in production
   // See your keys here: https://dashboard.stripe.com/account/apikeys
-  // let customerObject = await stripe.customers.retrieve(
-  //   event.body
-  // );
+  let customerObject = await stripe.customers.retrieve(
+    'cus_Fv4hPO4gFPbkKh'
+  );
 
   // let flag = false;
 
