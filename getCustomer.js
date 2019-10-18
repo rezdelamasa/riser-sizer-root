@@ -22,7 +22,7 @@ export async function main(event, context) {
   // let message = (flag) ? "Subscribed" : "Not subscribed";
 
   try {
-    return success(event);
+    return success(event.body);
   } catch (e) {
     return failure({ message: e.message });
   }
