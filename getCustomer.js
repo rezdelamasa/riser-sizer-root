@@ -2,7 +2,7 @@
 import { success, failure } from "./libs/response-lib";
 
 export async function main(event, context) {
-  const customerId = event.body + '';
+  // const customerId = event.body + '';
   // const amount = 1500;
   // const description = "Riser Sizer Monthly Subscription - Basic";
   // Load our secret key from the  environment variables
