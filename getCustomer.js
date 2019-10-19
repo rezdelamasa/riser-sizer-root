@@ -24,7 +24,7 @@ export async function main(event, context) {
   let message = (flag) ? "Subscribed" : "Not subscribed";
 
   try {
-    return success(customerObject);
+    return success(message);
   } catch (e) {
     return failure({ message: e.message });
   }
