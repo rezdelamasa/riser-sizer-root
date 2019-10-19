@@ -15,13 +15,13 @@ export async function main(event, context) {
     body
   );
 
-  // let flag = false;
+  let flag = false;
 
-  // if(customerObject.subscriptions.data.length > 0) {
-  //   flag = true;
-  // }
+  if(customerObject.subscriptions.data.length > 0) {
+    flag = true;
+  }
 
-  // let message = (flag) ? "Subscribed" : "Not subscribed";
+  let message = (flag) ? "Subscribed" : "Not subscribed";
 
   try {
     return success(customerObject);
