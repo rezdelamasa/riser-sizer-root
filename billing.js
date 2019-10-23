@@ -13,7 +13,7 @@ export async function main(event, context) {
   const Taxjar = require('taxjar');
 
   const client = new Taxjar({
-    apiKey: '9e0cd62a22f451701f29c3bde214'
+    apiKey: '988c002a729d9b91c9cbaceeb5b094b5'
   });
 
   // Set your secret key: remember to change this to your live secret key in production
