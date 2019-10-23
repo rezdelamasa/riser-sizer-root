@@ -52,7 +52,7 @@ export async function main(event, context) {
     // });
     // params["ExpressionAttributeValues"][":content"].user.customerId = customer.id;
     // await dynamoDbLib.call("update", params);
-    return success(data.content.userAddress);
+    return success(data.content);
   } catch (e) {
     return failure({ message: e.message });
   }
