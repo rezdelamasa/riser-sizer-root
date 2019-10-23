@@ -77,6 +77,7 @@ export async function main(event, context) {
     }).then(res => {
       // res.tax; // Tax object
       return success(res.tax);
+      return success('hello');
       // res.tax.amount_to_collect; // Amount to collect
     });
     // await stripe.charges.create({
@@ -95,7 +96,7 @@ export async function main(event, context) {
     // });
     // params["ExpressionAttributeValues"][":content"].user.customerId = customer.id;
     // await dynamoDbLib.call("update", params);
-    return success(tax);
+    // return success(tax);
   } catch (e) {
     return failure({ message: e.message });
   }
