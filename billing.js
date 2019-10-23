@@ -69,7 +69,7 @@ export async function main(event, context) {
         {
           id: '1',
           quantity: 1,
-          product_tax_code: '30700',
+          product_tax_code: '30070',
           unit_price: 40,
           discount: 0
         }
