@@ -42,7 +42,7 @@ export async function main(event, context) {
   // };
 
   try {
-    let tax = client.taxForOrder({
+    client.taxForOrder({
       from_country: 'US',
       from_zip: '65806',
       from_state: 'MO',
