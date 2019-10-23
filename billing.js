@@ -74,6 +74,10 @@ export async function main(event, context) {
           discount: 0
         }
       ]
+    }).then(res => {
+      // res.tax; // Tax object
+      return success(res.tax);
+      // res.tax.amount_to_collect; // Amount to collect
     });
     // await stripe.charges.create({
     //   source,
