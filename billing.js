@@ -10,6 +10,12 @@ export async function main(event, context) {
   // Load our secret key from the  environment variables
   // const stripe = stripePackage(process.env.stripeSecretKey);
 
+  const Taxjar = require('taxjar');
+
+  const client = new Taxjar({
+    apiKey: '9e0cd62a22f451701f29c3bde214'
+  });
+
   // Set your secret key: remember to change this to your live secret key in production
   // See your keys here: https://dashboard.stripe.com/account/apikeys
 
@@ -36,6 +42,39 @@ export async function main(event, context) {
   // };
 
   try {
+    let tax = client.taxForOrder({
+      from_country: 'US',
+      from_zip: '65806',
+      from_state: 'MO',
+      from_city: 'Springfield',
+      from_street: '521 N Jefferson Avenue',
+      to_country: "US",
+      to_zip: data.content.user.billingAddress.zip,
+      to_state: data.content.user.billingAddress.state,
+      to_city: data.content.user.billingAddress.city,
+      to_street: data.content.user.billingAddress.address,
+      amount: 40,
+      shipping: 0,
+      nexus_addresses: [
+        {
+          id: 'Main Location',
+          country: 'US',
+          zip: '65806',
+          state: 'MO',
+          city: 'Springfield',
+          street: '521 N Jefferson Avenue'
+        }
+      ],
+      line_items: [
+        {
+          id: '1',
+          quantity: 1,
+          product_tax_code: '30700',
+          unit_price: 40,
+          discount: 0
+        }
+      ]
+    })
     // await stripe.charges.create({
     //   source,
     //   amount,
@@ -52,7 +91,7 @@ export async function main(event, context) {
     // });
     // params["ExpressionAttributeValues"][":content"].user.customerId = customer.id;
     // await dynamoDbLib.call("update", params);
-    return success(data.content);
+    return success(tax);
   } catch (e) {
     return failure({ message: e.message });
   }
