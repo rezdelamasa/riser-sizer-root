@@ -76,7 +76,7 @@ export async function main(event, context) {
       ]
     }).then(res => {
       // res.tax; // Tax object
-      return success(res.tax);
+      return success(res);
       // res.tax.amount_to_collect; // Amount to collect
     });
     // await stripe.charges.create({
