@@ -74,7 +74,7 @@ export async function main(event, context) {
           discount: 0
         }
       ]
-    })
+    });
     // await stripe.charges.create({
     //   source,
     //   amount,
