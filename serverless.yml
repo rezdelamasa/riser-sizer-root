@@ -1,4 +1,4 @@
-service: riser-sizer-api-2
+service: riser-sizer-api-3
 
 # Create an optimized package for our functions
 package:
@@ -13,7 +13,7 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-riser-sizer-user-props
+  tableName: ${self:custom.stage}-riser-sizer-user-properties
 
 provider:
   name: aws
@@ -39,7 +39,7 @@ provider:
     # Restrict our IAM role permissions to
     # the specific table for the stage
     Resource:
-      - "Fn::GetAtt": [ RiserSizerUserProps, Arn ]
+      - "Fn::GetAtt": [ RiserSizerUserProperties, Arn ]
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
