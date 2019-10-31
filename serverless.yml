@@ -30,7 +30,7 @@ provider:
   #   These environment variables are made available to our functions
   # under process.env.
   environment:
-    tableName: riser-sizer-user-props
+    tableName: ${self:custom.tableName}
 
   iamRoleStatements:
     - Effect: Allow
