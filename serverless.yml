@@ -1,6 +1,6 @@
 # NOTE: update this with your service name
 
-service: riser-sizer-api
+service: riser-sizer-api-2
 
 # Create an optimized package for our functions
 package:
@@ -15,7 +15,7 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-user-properties
+  tableName: ${self:custom.stage}-user-props
   # Load our secret environment variables based on the current stage.
   # Fallback to default if it is not in prod.
   environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
@@ -29,7 +29,7 @@ provider:
   #   These environment variables are made available to our functions
   # under process.env.
   environment:
-    tableName: ${self:custom.tableName}
+    tableName: riser-sizer-user-props
     stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
@@ -59,7 +59,7 @@ functions:
     handler: create.main
     events:
       - http:
-          path: riser-sizer-user-properties
+          path: riser-sizer-user-props
           method: post
           cors: true
           authorizer: aws_iam
@@ -70,7 +70,7 @@ functions:
     handler: get.main
     events:
       - http:
-          path: riser-sizer-user-properties
+          path: riser-sizer-user-props
           method: get
           cors: true
           authorizer: aws_iam
@@ -82,7 +82,7 @@ functions:
     handler: update.main
     events:
       - http:
-          path: riser-sizer-user-properties
+          path: riser-sizer-user-props
           method: put
           cors: true
           authorizer: aws_iam
