@@ -23,14 +23,13 @@ custom:
 provider:
   name: aws
   runtime: nodejs10.x
-  stage: dev
+  stage: prod
   region: us-east-2
     
   #   These environment variables are made available to our functions
   # under process.env.
   environment:
     tableName: riser-sizer-user-props
-    stripeSecretKey: ${self:custom.environment.stripeSecretKey}
 
   iamRoleStatements:
     - Effect: Allow
