@@ -1,5 +1,3 @@
-# NOTE: update this with your service name
-
 service: riser-sizer-api-2
 
 # Create an optimized package for our functions
@@ -15,42 +13,37 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-user-props
-  # Load our secret environment variables based on the current stage.
-  # Fallback to default if it is not in prod.
-  environment: ${file(env.yml):${self:custom.stage}, file(env.yml):default}
+  tableName: ${self:custom.stage}-riser-sizer-user-props
 
 provider:
   name: aws
   runtime: nodejs10.x
   stage: dev
   region: us-east-2
-  versionFunctions: false
-    
-  #   These environment variables are made available to our functions
+
+    # These environment variables are made available to our functions
   # under process.env.
   environment:
     tableName: ${self:custom.tableName}
 
   iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      # Restrict our IAM role permissions to
-      # the specific table for the stage
-      Resource:
-        - "Fn::GetAtt": [ UserPropertiesTable, Arn ]
-
+  - Effect: Allow
+    Action:
+      - dynamodb:DescribeTable
+      - dynamodb:Query
+      - dynamodb:Scan
+      - dynamodb:GetItem
+      - dynamodb:PutItem
+      - dynamodb:UpdateItem
+      - dynamodb:DeleteItem
+    # Restrict our IAM role permissions to
+    # the specific table for the stage
+    Resource:
+      - "Fn::GetAtt": [ RiserSizerUserProps, Arn ]
 
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
-  # - path: url path is /projects
+  # - path: url path is /notes
   # - method: POST request
   # - cors: enabled CORS (Cross-Origin Resource Sharing) for browser cross
   #     domain api call
@@ -59,30 +52,29 @@ functions:
     handler: create.main
     events:
       - http:
-          path: risersizer
+          path: riser-sizer-user-props
           method: post
           cors: true
           authorizer: aws_iam
   get:
     # Defines an HTTP API endpoint that calls the main function in get.js
-    # - path: url path is /projects/{id}
+    # - path: url path is /notes/{id}
     # - method: GET request
     handler: get.main
     events:
       - http:
-          path: risersizer
+          path: riser-sizer-user-props
           method: get
           cors: true
           authorizer: aws_iam
-
   update:
     # Defines an HTTP API endpoint that calls the main function in update.js
-    # - path: url path is /projects/{id}
+    # - path: url path is /notes/{id}
     # - method: PUT request
     handler: update.main
     events:
       - http:
-          path: risersizer
+          path: riser-sizer-user-props
           method: put
           cors: true
           authorizer: aws_iam
@@ -90,6 +82,8 @@ functions:
 resources:
   # API Gateway Errors
   - ${file(resources/api-gateway-errors.yml)}
+  # DynamoDB
   - ${file(resources/dynamodb-table.yml)}
+  # Cognito
   - ${file(resources/cognito-user-pool.yml)}
   - ${file(resources/cognito-identity-pool.yml)}
